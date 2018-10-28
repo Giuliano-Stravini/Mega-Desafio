@@ -15,6 +15,3 @@ const config = {
 
   export const db = firebase.firestore();
   export const base = Rebase.createClass(configFirebase.firestore());
-
-  export const storage = firebase.storage();
-

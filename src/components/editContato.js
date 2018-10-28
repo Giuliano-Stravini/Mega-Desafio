@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
 import { Text, View, Image, TextInput, ScrollView, TouchableOpacity } from 'react-native'
-import { connect } from 'react-redux'
 import ImagePicker from 'react-native-image-picker';
 
-import { db, base, storage } from '../configFirebase'
-
-import { modificarNome, modificarTelefone, modificarEndereco, cadastrar } from '../actions/infoContatoActions'
+import { base } from '../configFirebase'
 
 import imgUserDefault from './imgs/userdefault.png'
 import imgCamera from './imgs/iconCamera.png'
@@ -17,14 +14,14 @@ const options = {
     chooseFromLibraryButtonTitle: 'Galeria'
 };
 
-class editContato extends Component {
+export default class editContato extends Component {
 
     _excluir = () => {
         base.removeDoc('contatos/' + this.state.idTeste)
             .then(() => {
                 alert("Contato excluido")
             })
-            .then(() => { 
+            .then(() => {
                 Actions.pop()
             })
             .catch(err => {
@@ -33,72 +30,52 @@ class editContato extends Component {
     }
 
     _editar = () => {
-        // const { nome, telefone, endereco } = this.props
 
-        try{
-        if (this.state.imgPath == null) {
-            data = {
-                nome: this.state.nomeTeste,
-                telefone: this.state.telefoneTeste,
-                endereco: this.state.enderecoTeste,
-            }
-        } else {
+        try {
+            if (this.state.imgPath == null) {
+                data = {
+                    nome: this.state.nomeTeste,
+                    telefone: this.state.telefoneTeste,
+                    endereco: this.state.enderecoTeste,
+                }
+            } else {
 
-            data = {
-                nome: this.state.nomeTeste,
-                telefone: this.state.telefoneTeste,
-                endereco: this.state.enderecoTeste,
-                imgPath: this.state.imgPath
+                data = {
+                    nome: this.state.nomeTeste,
+                    telefone: this.state.telefoneTeste,
+                    endereco: this.state.enderecoTeste,
+                    imgPath: this.state.imgPath
+                }
             }
+
+            console.log(this.state.idTeste)
+
+
+
+            base.addToCollection('contatos', data, this.state.idTeste)
+                .then(() => {
+                    alert('Contato Editado')
+                }).then(() => {
+                    Actions.pop()
+                })
+                .catch(err => {
+                    alert("erro")
+                });
         }
-        
-        console.log(this.state.idTeste)
-        
-        // db.collection('contatos').get().then(snap => {
-            //     size = snap.size.toString // will return the collection size
-            // })
-            // console.warn(typeof(this.size))
-            
-            // this.props.cadastrar({ nome, telefone, endereco})
-            
-            // console.warn(props.nome, props.telefone, props.endereco)
-            
-            // db.collection("contatos").doc("1").set({
-                //     nome: props.nome,
-                //     telefone: props.telefone,
-                //     endereco: props.endereco,
-                // })
-                // .then(function() {
-                    //     console.log("Document successfully written!");
-                    // })
-                    // .catch(function(error) {
-                        //     console.error("Error writing document: ", error);
-                        // });
-                        
-                        base.addToCollection('contatos', data, this.state.idTeste)
-                        .then(() => {
-                            alert('Contato Editado')
-                        }).then(() => { 
-                            Actions.pop()
-                        })
-                        .catch(err => {
-                            alert("erro")
-                        });
-                    }
-                        catch(err){
-                            alert("Favor preencher todos os campos")
-                        }
-                    }
-                    
-                    
-                    
-                    selecionarFoto = () => {
-                        
-                        ImagePicker.showImagePicker(options, (response) => {
-                            console.log('Response = ', response);
+        catch (err) {
+            alert("Favor preencher todos os campos")
+        }
+    }
 
-                            if (response.didCancel) {
-                                console.log('User cancelled image picker');
+
+
+    selecionarFoto = () => {
+
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
             } else if (response.error) {
                 console.log('ImagePicker Error: ', response.error);
             } else if (response.customButton) {
@@ -191,15 +168,6 @@ class editContato extends Component {
     }
 
 }
-
-const mapStateToProps = state => ({
-    nome: state.infoContatoReducer.nome,
-    telefone: state.infoContatoReducer.telefone,
-    endereco: state.infoContatoReducer.endereco,
-    imgPath: state.infoContatoReducer.imgPath
-})
-
-export default connect(mapStateToProps, { modificarNome, modificarTelefone, modificarEndereco, cadastrar })(editContato)
 
 
 const Estilo = {

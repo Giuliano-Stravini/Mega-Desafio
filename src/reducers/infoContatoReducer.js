@@ -2,8 +2,7 @@ const INITIAL_STATE = {
     nome: '',
     telefone: '',
     endereco: '',
-    imgPath: '',
-    data: {}
+    imgPath: ''
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -20,11 +19,6 @@ export default (state = INITIAL_STATE, action) => {
     if (action.type == 'modificarEndereco') {
         return {...state, endereco: action.payload}
     }
-    
-    if (action.type == 'actionData') {
-        return {...state, data: action.payload}
-    }
-
 
     return state;
 }

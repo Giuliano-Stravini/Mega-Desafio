@@ -56,8 +56,8 @@ const Estilo = {
     },
     imgContato: {
         borderRadius: 100,
-        height: 100,
-        width: 100,
+        height: 150,
+        width: 150,
         marginLeft: 'auto',
         marginRight: 'auto',
         marginTop: 15,

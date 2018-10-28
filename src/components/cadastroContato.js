@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { Text, View, Image, TextInput, ScrollView, TouchableOpacity } from 'react-native'
-import { connect } from 'react-redux'
+
 import ImagePicker from 'react-native-image-picker';
 import { Actions } from 'react-native-router-flux';
 
-import { db, base, storage } from '../configFirebase'
+import { db, base } from '../configFirebase'
 
-import { modificarNome, modificarTelefone, modificarEndereco, cadastrar } from '../actions/infoContatoActions'
+
 
 import imgUserDefault from './imgs/userdefault.png'
 import imgCamera from './imgs/iconCamera.png'
@@ -17,7 +17,7 @@ const options = {
     chooseFromLibraryButtonTitle: 'Galeria'
 };
 
-class cadastroContato extends Component {
+export default class cadastroContato extends Component {
 
 
     _cadastrar = () => {
@@ -156,15 +156,6 @@ class cadastroContato extends Component {
     }
 
 }
-
-const mapStateToProps = state => ({
-    nome: state.infoContatoReducer.nome,
-    telefone: state.infoContatoReducer.telefone,
-    endereco: state.infoContatoReducer.endereco,
-    imgPath: state.infoContatoReducer.imgPath
-})
-
-export default connect(mapStateToProps, { modificarNome, modificarTelefone, modificarEndereco, cadastrar })(cadastroContato)
 
 
 const Estilo = {

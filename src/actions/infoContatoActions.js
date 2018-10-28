@@ -1,5 +1,3 @@
-import { db } from '../configFirebase'
-
 export const modificarNome = (texto) => {
     return {
         type: 'modificarNome',
@@ -23,23 +21,5 @@ export const actionData = (objDataDoc) => {
     return {
         type: 'actionData',
         playload: objDataDoc
-    }
-}
-
-export const cadastrar = ({nome, telefone, endereco}) => {
-    db.collection("contatos").doc("1").set({
-        nome: nome,
-        telefone: telefone,
-        endereco: endereco,
-    })
-    .then(function() {
-        console.log("Document successfully written!");
-    })
-    .catch(function(error) {
-        console.error("Error writing document: ", error);
-    });
-
-    return{
-        type: 'teste'
     }
 }

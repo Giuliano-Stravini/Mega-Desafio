@@ -9,32 +9,6 @@ import Contato from './contato'
 
 class corpo extends Component {
 
-  // componentWillMount(){
-  //   db.collection("contatos").get().then(function(querySnapshot) {
-  //     querySnapshot.forEach(function(doc) {
-  //         // doc.data() is never undefined for query doc snapshots
-  //         console.warn(doc.id, " => ", doc.data());
-  //     });
-  // });
-  // }
-  // myFun=()=>{
-  //   db.collection("contatos").get().then(function(querySnapshot) {
-  //     querySnapshot.forEach(function(doc) {
-  //         // doc.data() is never undefined for query doc snapshots
-  //         // console.warn(doc.id, " => ", doc.data());
-  //         dbData = [doc.data()]
-  //         console.warn(dbData)
-  //         Object.keys(dbData)
-  //         .map(keys => {
-  //               return (
-  //               <Contato key={keys} conteudo={dbData}/>
-  //               )
-  //             })
-  //         // props.actionData(doc.data())
-  //     });
-  // })
-  // }
-
   constructor(props) {
     super(props);
 

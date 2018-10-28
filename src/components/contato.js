@@ -7,7 +7,7 @@ import imgUserDefault from './imgs/userdefault.png'
 import imgEdit from './imgs/edit.png'
 
 
-const contato = props => {
+export const contato = props => {
     return (
                 <TouchableOpacity onPress={() => Actions.infoContato({conteudo: props.conteudo})}>
             <View style={Estilo.view}>

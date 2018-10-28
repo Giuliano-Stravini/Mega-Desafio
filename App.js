@@ -1,14 +1,3 @@
-{/*
-  TODO:
-  
-  -Fazer loop para puxar os contatos do firestore 
-  -Enviar informações ao adicionar novo contato
-  -Editar informações ao alterar campos no editContato.js
-  -Criar as actions
-
-*/}
-
-
 
 import React from 'react';
 import { Provider } from 'react-redux';
