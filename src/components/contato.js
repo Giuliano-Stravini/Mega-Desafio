@@ -1,0 +1,93 @@
+import React, { Component } from 'react'
+import { Text, View, Image, TouchableOpacity } from 'react-native'
+import { Actions } from 'react-native-router-flux'
+import {connect} from 'react-redux'
+
+import imgUserDefault from './imgs/userdefault.png'
+import imgEdit from './imgs/edit.png'
+
+
+const contato = props => {
+    return (
+                <TouchableOpacity onPress={() => Actions.infoContato({conteudo: props.conteudo})}>
+            <View style={Estilo.view}>
+
+                    <View style={Estilo.viewContato1}>
+                        <Image style={Estilo.imgContato} source={(props.conteudo.imgPath == null) ? imgUserDefault : props.conteudo.imgPath} />
+                        <View style={{flexDirection: 'column'}}>
+                        <Text style={Estilo.txtNome}>{props.conteudo.nome}</Text>
+                        <Text style={Estilo.txtTel}>{props.conteudo.telefone}</Text>
+                        <Text style={Estilo.txtTel}>{props.conteudo.endereco}</Text>
+                        </View>
+                    </View>
+                <View style={Estilo.viewContato2}>
+                    <TouchableOpacity onPress={() => Actions.editContato({conteudo: props.conteudo})}>
+                        <Image style={Estilo.imgEditar} source={imgEdit}/>
+                    </TouchableOpacity>
+                </View>
+            </View>
+                </TouchableOpacity>
+
+        )
+}
+
+
+const mapStateToProps = state => ({
+    nome: state.infoContatoReducer.nome,
+    telefone: state.infoContatoReducer.telefone,
+    endereco: state.infoContatoReducer.endereco,
+    imgPath: state.infoContatoReducer.imgPath
+})
+
+export default connect(mapStateToProps, null)(contato)
+
+
+    const Estilo = {
+    
+        view: {
+            flexDirection: 'row',
+            justifyContent: 'space-between'
+        },
+    
+        viewContato1: {
+            backgrounColor: 'whitesmoke',
+            flexDirection: 'row',
+            marginTop: 2,
+            paddingTop: 5,
+            paddingBottom: 5,
+        },
+        imgContato: {
+            borderRadius: 100,
+            height: 50,
+            width: 50,
+            marginLeft: 10
+        },
+        txtNome: {
+            color: "black",
+            alignSelf: 'center',
+            paddingLeft: 15,
+            fontSize: 20,
+        },
+        txtTel: {
+            color: "grey",
+            alignSelf: 'flex-start',
+            paddingLeft: 15,
+            fontSize: 10,
+        },
+    
+        viewContato2: {
+            justifyContent: 'center',
+            alignContent: 'center'
+        },
+    
+        botaoEditar: {
+            backgrounColor: 'transparent'
+        },
+    
+        imgEditar: {
+            marginRight: 10,
+            height: 30,
+            width: 30,
+        }
+    
+    }
