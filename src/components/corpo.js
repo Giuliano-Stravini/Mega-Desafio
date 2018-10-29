@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import { Actions } from 'react-native-router-flux'
-import { db, base } from '../configFirebase'
-import { connect } from 'react-redux'
-import { actionData } from '../actions/infoContatoActions'
+import { base } from '../configFirebase'
 
 import Contato from './contato'
 
-class corpo extends Component {
+export default class Corpo extends Component {
 
   constructor(props) {
     super(props);
@@ -52,17 +50,6 @@ class corpo extends Component {
     )
   }
 }
-
-const mapStateToProps = state => ({
-  nome: state.infoContatoReducer.nome,
-  telefone: state.infoContatoReducer.telefone,
-  endereco: state.infoContatoReducer.endereco,
-  imgPath: state.infoContatoReducer.imgPath,
-  data: state.infoContatoReducer.data
-})
-
-export default connect(mapStateToProps, { actionData })(corpo)
-
 
 const Estilos = {
   txtAdicionar: {

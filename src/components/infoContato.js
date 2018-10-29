@@ -1,41 +1,31 @@
 import React, { Component } from 'react'
 import { Text, View, Image, TextInput } from 'react-native'
-import {connect} from 'react-redux'
-
 
 import imgUserDefault from './imgs/userdefault.png'
 
 
-const infoContato = props => {
+export default class InfoContato extends Component {
+    render() {
         return (
             <View>
                 <View style={Estilo.view}>
-                    <Image style={Estilo.imgContato} source={(props.conteudo.imgPath == null) ? imgUserDefault : props.conteudo.imgPath} />
+                    <Image style={Estilo.imgContato} source={(this.props.conteudo.imgPath == null) ? imgUserDefault : this.props.conteudo.imgPath} />
                 </View>
                 <View style={Estilo.view3}>
                     <Text style={Estilo.textNome}>Nome:</Text>
-                    <Text style={Estilo.textNome2}>{props.conteudo.nome}</Text>
+                    <Text style={Estilo.textNome2}>{this.props.conteudo.nome}</Text>
 
                     <Text style={Estilo.textNome}>Telefone:</Text>
-                    <Text style={Estilo.textNome2}>{props.conteudo.telefone}</Text>
-                    
+                    <Text style={Estilo.textNome2}>{this.props.conteudo.telefone}</Text>
+
                     <Text style={Estilo.textNome}>Endereço:</Text>
-                    <Text style={Estilo.textNome2}>{props.conteudo.endereco}</Text>
+                    <Text style={Estilo.textNome2}>{this.props.conteudo.endereco}</Text>
                 </View>
             </View>
         )
     }
+}
 
-
-
-const mapStateToProps = state => ({
-    nome: state.infoContatoReducer.nome,
-    telefone: state.infoContatoReducer.telefone,
-    endereco: state.infoContatoReducer.endereco,
-    imgPath: state.infoContatoReducer.imgPath
-})
-
-export default connect(mapStateToProps, null)(infoContato)
 
 
 const Estilo = {

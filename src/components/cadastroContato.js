@@ -6,8 +6,6 @@ import { Actions } from 'react-native-router-flux';
 
 import { db, base } from '../configFirebase'
 
-
-
 import imgUserDefault from './imgs/userdefault.png'
 import imgCamera from './imgs/iconCamera.png'
 
@@ -21,7 +19,6 @@ export default class cadastroContato extends Component {
 
 
     _cadastrar = () => {
-        // const { nome, telefone, endereco } = this.props
         data = {
             nome: this.state.nomeTeste,
             telefone: this.state.telefoneTeste,
@@ -31,33 +28,16 @@ export default class cadastroContato extends Component {
 
         db.collection('contatos').get().then(snap => {
             size = snap.size // will return the collection size
-            base.addToCollection('contatos', data, "a"+snap.size)
+            base.addToCollection('contatos', data, "a" + snap.size)
                 .then(() => {
                     alert('Contato cadastrado')
-                }).then(() => { 
+                }).then(() => {
                     Actions.pop()
                 })
                 .catch(err => {
                     alert(err)
                 });
         })
-
-        // this.props.cadastrar({ nome, telefone, endereco})
-
-        // console.warn(props.nome, props.telefone, props.endereco)
-
-        // db.collection("contatos").doc("1").set({
-        //     nome: props.nome,
-        //     telefone: props.telefone,
-        //     endereco: props.endereco,
-        // })
-        // .then(function() {
-        //     console.log("Document successfully written!");
-        // })
-        // .catch(function(error) {
-        //     console.error("Error writing document: ", error);
-        // });
-
     }
 
 
@@ -76,9 +56,6 @@ export default class cadastroContato extends Component {
             } else {
                 const source = { uri: response.uri };
 
-                // You can also display the image using data:
-                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-
                 this.setState({
                     avatarSource: source,
                 });
@@ -91,18 +68,11 @@ export default class cadastroContato extends Component {
         super(props);
 
         this.state = {
-            dbData: {},
             avatarSource: null,
             nomeTeste: '',
             telefoneTeste: '',
             enderecoTeste: '',
         }
-
-        base.bindCollection('contatos', {
-            context: this,
-            state: 'dbData',
-
-        })
 
     }
 
@@ -121,29 +91,29 @@ export default class cadastroContato extends Component {
                     <View style={Estilo.view3}>
                         <Text style={Estilo.textNome}>Nome:</Text>
                         <TextInput
-                            ref={(nome) => {this.nomeTeste = nome}}
+                            ref={(nome) => { this.nomeTeste = nome }}
                             style={Estilo.txtInput}
                             placeholder="Nome"
                             maxLength={40}
                             value={this.state.nomeTeste}
-                            onChangeText={texto =>  this.setState({ nomeTeste: texto })}
+                            onChangeText={texto => this.setState({ nomeTeste: texto })}
                         />
                         <Text style={Estilo.textNome}>Telefone:</Text>
                         <TextInput
-                        ref={(telefone) => {this.telefoneTeste = telefone}}
+                            ref={(telefone) => { this.telefoneTeste = telefone }}
                             style={Estilo.txtInput}
                             placeholder="xx xxxxx-xxxx"
                             value={this.state.telefoneTeste}
-                            onChangeText={texto =>  this.setState({ telefoneTeste: texto })}
+                            onChangeText={texto => this.setState({ telefoneTeste: texto })}
                         />
                         <Text style={Estilo.textNome}>Endereço:</Text>
                         <TextInput
-                        ref={(endereco) => {this.enderecoTeste = endereco}}
+                            ref={(endereco) => { this.enderecoTeste = endereco }}
                             style={Estilo.txtInput}
                             placeholder="Endereço"
                             maxLength={50}
                             value={this.state.enderecoTeste}
-                            onChangeText={texto =>  this.setState({ enderecoTeste: texto })}
+                            onChangeText={texto => this.setState({ enderecoTeste: texto })}
                         />
                     </View>
                 </ScrollView>

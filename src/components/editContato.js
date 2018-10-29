@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { Text, View, Image, TextInput, ScrollView, TouchableOpacity } from 'react-native'
+
 import ImagePicker from 'react-native-image-picker';
+import { Actions } from 'react-native-router-flux';
 
 import { base } from '../configFirebase'
 
 import imgUserDefault from './imgs/userdefault.png'
 import imgCamera from './imgs/iconCamera.png'
-import { Actions } from 'react-native-router-flux';
 
 const options = {
     title: 'Selecione uma foto',

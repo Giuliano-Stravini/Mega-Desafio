@@ -1,27 +1,28 @@
 import React, { Component } from 'react'
 import { Text, View, Image, TouchableOpacity } from 'react-native'
+
 import { Actions } from 'react-native-router-flux'
-import {connect} from 'react-redux'
 
 import imgUserDefault from './imgs/userdefault.png'
 import imgEdit from './imgs/edit.png'
 
 
-export const contato = props => {
+export default class Contato extends Component {
+    render (){
     return (
-                <TouchableOpacity onPress={() => Actions.infoContato({conteudo: props.conteudo})}>
+                <TouchableOpacity onPress={() => Actions.infoContato({conteudo: this.props.conteudo})}>
             <View style={Estilo.view}>
 
                     <View style={Estilo.viewContato1}>
-                        <Image style={Estilo.imgContato} source={(props.conteudo.imgPath == null) ? imgUserDefault : props.conteudo.imgPath} />
+                        <Image style={Estilo.imgContato} source={(this.props.conteudo.imgPath == null) ? imgUserDefault : this.props.conteudo.imgPath} />
                         <View style={{flexDirection: 'column'}}>
-                        <Text style={Estilo.txtNome}>{props.conteudo.nome}</Text>
-                        <Text style={Estilo.txtTel}>{props.conteudo.telefone}</Text>
-                        <Text style={Estilo.txtTel}>{props.conteudo.endereco}</Text>
+                        <Text style={Estilo.txtNome}>{this.props.conteudo.nome}</Text>
+                        <Text style={Estilo.txtTel}>{this.props.conteudo.telefone}</Text>
+                        <Text style={Estilo.txtTel}>{this.props.conteudo.endereco}</Text>
                         </View>
                     </View>
                 <View style={Estilo.viewContato2}>
-                    <TouchableOpacity onPress={() => Actions.editContato({conteudo: props.conteudo})}>
+                    <TouchableOpacity onPress={() => Actions.editContato({conteudo: this.props.conteudo})}>
                         <Image style={Estilo.imgEditar} source={imgEdit}/>
                     </TouchableOpacity>
                 </View>
@@ -29,18 +30,8 @@ export const contato = props => {
                 </TouchableOpacity>
 
         )
+    }
 }
-
-
-const mapStateToProps = state => ({
-    nome: state.infoContatoReducer.nome,
-    telefone: state.infoContatoReducer.telefone,
-    endereco: state.infoContatoReducer.endereco,
-    imgPath: state.infoContatoReducer.imgPath
-})
-
-export default connect(mapStateToProps, null)(contato)
-
 
     const Estilo = {
     
