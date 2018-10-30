@@ -1,14 +1,21 @@
 import React, { Component } from 'react'
 import { Text, View, Image, TextInput, ScrollView, TouchableOpacity } from 'react-native'
 
+//Possibilita a seleção de imagens
 import ImagePicker from 'react-native-image-picker';
+
+//Possibilita a navegação entre as cenas
 import { Actions } from 'react-native-router-flux';
 
+//Possibilita a conexção com o fireStore
 import { db, base } from '../configFirebase'
 
+//Imagem default do avatar
 import imgUserDefault from './imgs/userdefault.png'
+//Icone da camera
 import imgCamera from './imgs/iconCamera.png'
 
+//Opções da caixa de dialogo exibida após selecionar o icone de foto
 const options = {
     title: 'Selecione uma foto',
     takePhotoButtonTitle: 'Tirar foto',
@@ -17,8 +24,9 @@ const options = {
 
 export default class cadastroContato extends Component {
 
-
+    //Função para cadastrar
     _cadastrar = () => {
+        //Recolhe informações a armazena em um obj
         data = {
             nome: this.state.nomeTeste,
             telefone: this.state.telefoneTeste,
@@ -26,22 +34,26 @@ export default class cadastroContato extends Component {
             imgPath: this.state.avatarSource
         }
 
+        //verifica quantidade de documentos para utilizar como base de ids
         db.collection('contatos').get().then(snap => {
-            size = snap.size // will return the collection size
-            base.addToCollection('contatos', data, "a" + snap.size)
+            size = snap.size //retorna o tamanha da coleção
+            base.addToCollection('contatos', data, "a" + snap.size) // Adiciona no Firestore (coleção, dados, id)
                 .then(() => {
+                    //exito
                     alert('Contato cadastrado')
                 }).then(() => {
+                    //Volta a tela
                     Actions.pop()
                 })
                 .catch(err => {
+                    //Erro
                     alert(err)
                 });
         })
     }
 
 
-
+    //Função para seleção da foto
     selecionarFoto = () => {
 
         ImagePicker.showImagePicker(options, (response) => {
@@ -127,7 +139,7 @@ export default class cadastroContato extends Component {
 
 }
 
-
+//Style
 const Estilo = {
     view: {
         flexDirection: 'row',

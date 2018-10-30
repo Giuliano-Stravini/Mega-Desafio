@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
+
+//Possibilita navegação entre os componentes
 import { Actions } from 'react-native-router-flux'
+
+//Possibilita utilização do firestore
 import { base } from '../configFirebase'
 
+//impor do componente Contado.js
 import Contato from './contato'
 
 export default class Corpo extends Component {
@@ -11,15 +16,19 @@ export default class Corpo extends Component {
     super(props);
 
     this.state = {
+      //Onde vai ser armazenado os dados
       dbData: {}
     }
 
+    //Conexão feita com fireStore através da biblioteca Re-base
     base.bindCollection('contatos', {
       context: this,
+      //Onde vai ser armazenado os dados
       state: 'dbData',
       withIds: true,
       query: ref => {
         return ref
+        //Ordem em que vai ser recebido os dados
           .orderBy("nome", "asc")
       }
 
@@ -33,6 +42,7 @@ export default class Corpo extends Component {
         <View style={{ flex: 1 }}>
           <ScrollView>
             {
+              //Passa por toda lista puxando e inserindo os dados via props no contato.js
               Object.keys(this.state.dbData)
                 .map(keys => {
                   return (
@@ -51,6 +61,7 @@ export default class Corpo extends Component {
   }
 }
 
+//Style
 const Estilos = {
   txtAdicionar: {
     backgroundColor: '#abce45',

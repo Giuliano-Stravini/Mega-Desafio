@@ -1,14 +1,21 @@
 import React, { Component } from 'react'
 import { Text, View, Image, TextInput, ScrollView, TouchableOpacity } from 'react-native'
 
+//Possibilita captar imagens da galeria ou tiradas pela camera
 import ImagePicker from 'react-native-image-picker';
+
+//Possibilita a navegação entre cenas
 import { Actions } from 'react-native-router-flux';
 
+//Possibilita conexção com fireStore
 import { base } from '../configFirebase'
 
+//Imagem default para avatar
 import imgUserDefault from './imgs/userdefault.png'
+//Icone da camera
 import imgCamera from './imgs/iconCamera.png'
 
+//Opções da caixa de dialogo exibida após selecionar o icone de foto
 const options = {
     title: 'Selecione uma foto',
     takePhotoButtonTitle: 'Tirar foto',
@@ -17,64 +24,70 @@ const options = {
 
 export default class editContato extends Component {
 
+    //Função de exclução
     _excluir = () => {
-        base.removeDoc('contatos/' + this.state.idTeste)
+        //Remoção baseada no Id do documento
+        base.removeDoc('contatos/' + this.state.idDoc)
             .then(() => {
+                //Exito
                 alert("Contato excluido")
             })
             .then(() => {
+                //Volta a tela
                 Actions.pop()
             })
             .catch(err => {
+                //Falha
                 alert("erro")
             });
     }
 
+    //Função de edição
     _editar = () => {
 
+        //Try/Cath - Caso não possua imagem, usar a default
         try {
             if (this.state.imgPath == null) {
                 data = {
-                    nome: this.state.nomeTeste,
-                    telefone: this.state.telefoneTeste,
-                    endereco: this.state.enderecoTeste,
+                    nome: this.state._nome,
+                    telefone: this.state._telefone,
+                    endereco: this.state._endereco,
                 }
             } else {
 
                 data = {
-                    nome: this.state.nomeTeste,
-                    telefone: this.state.telefoneTeste,
-                    endereco: this.state.enderecoTeste,
+                    nome: this.state._nome,
+                    telefone: this.state._telefone,
+                    endereco: this.state._endereco,
                     imgPath: this.state.imgPath
                 }
             }
 
-            console.log(this.state.idTeste)
-
-
-
-            base.addToCollection('contatos', data, this.state.idTeste)
+            //Enviando dados para colecao 'contatos', dados enviados, id do Doc
+            base.addToCollection('contatos', data, this.state.idDoc)
                 .then(() => {
+                    //exito
                     alert('Contato Editado')
                 }).then(() => {
+                    //volta a tela
                     Actions.pop()
                 })
                 .catch(err => {
+                    //Falha
                     alert("erro")
                 });
         }
         catch (err) {
+            //Falha
             alert("Favor preencher todos os campos")
         }
     }
 
 
-
+    //Função para seleção da foto
     selecionarFoto = () => {
 
         ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
-
             if (response.didCancel) {
                 console.log('User cancelled image picker');
             } else if (response.error) {
@@ -83,9 +96,6 @@ export default class editContato extends Component {
                 console.log('User tapped custom button: ', response.customButton);
             } else {
                 const source = { uri: response.uri };
-
-                // You can also display the image using data:
-                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
 
                 this.setState({
                     imgPath: source,
@@ -99,25 +109,16 @@ export default class editContato extends Component {
         super(props);
 
         this.state = {
-            dbData: {},
-            avatarSource: null,
-            nomeTeste: this.props.conteudo.nome,
-            telefoneTeste: this.props.conteudo.telefone,
-            enderecoTeste: this.props.conteudo.endereco,
+            _nome: this.props.conteudo.nome,
+            _telefone: this.props.conteudo.telefone,
+            _endereco: this.props.conteudo.endereco,
             imgPath: this.props.conteudo.imgPath,
-            idTeste: this.props.conteudo.id
+            idDoc: this.props.conteudo.id
         }
-
-        base.bindCollection('contatos', {
-            context: this,
-            state: 'dbData',
-
-        })
-
     }
 
 
-
+    //Exibindo informações recebidas através de props do contato.js
     render() {
         return (
             <View style={{ flex: 1 }}>
@@ -131,29 +132,29 @@ export default class editContato extends Component {
                     <View style={Estilo.view3}>
                         <Text style={Estilo.textNome}>Nome:</Text>
                         <TextInput
-                            ref={(nome) => { this.nomeTeste = nome }}
+                            ref={(nome) => { this._nome = nome }}
                             style={Estilo.txtInput}
                             placeholder="Nome"
                             maxLength={40}
-                            value={this.state.nomeTeste}
-                            onChangeText={texto => this.setState({ nomeTeste: texto })}
+                            value={this.state._nome}
+                            onChangeText={texto => this.setState({ _nome: texto })}
                         />
                         <Text style={Estilo.textNome}>Telefone:</Text>
                         <TextInput
-                            ref={(telefone) => { this.telefoneTeste = telefone }}
+                            ref={(telefone) => { this._telefone = telefone }}
                             style={Estilo.txtInput}
                             placeholder="xx xxxxx-xxxx"
-                            value={this.state.telefoneTeste}
-                            onChangeText={texto => this.setState({ telefoneTeste: texto })}
+                            value={this.state._telefone}
+                            onChangeText={texto => this.setState({ _telefone: texto })}
                         />
                         <Text style={Estilo.textNome}>Endereço:</Text>
                         <TextInput
-                            ref={(endereco) => { this.enderecoTeste = endereco }}
+                            ref={(endereco) => { this._endereco = endereco }}
                             style={Estilo.txtInput}
                             placeholder="Endereço"
                             maxLength={50}
-                            value={this.state.enderecoTeste}
-                            onChangeText={texto => this.setState({ enderecoTeste: texto })}
+                            value={this.state._endereco}
+                            onChangeText={texto => this.setState({ _endereco: texto })}
                         />
                     </View>
                 </ScrollView>
@@ -170,7 +171,7 @@ export default class editContato extends Component {
 
 }
 
-
+//Style
 const Estilo = {
     view: {
         flexDirection: 'row',

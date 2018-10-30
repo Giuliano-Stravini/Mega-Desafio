@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { Text, View, Image, TextInput } from 'react-native'
+import { Text, View, Image } from 'react-native'
 
+//Imagem default para avatar
 import imgUserDefault from './imgs/userdefault.png'
 
 
 export default class InfoContato extends Component {
+    //Exibindo informações recebidas através de props do contato.js
     render() {
         return (
             <View>
@@ -27,7 +29,7 @@ export default class InfoContato extends Component {
 }
 
 
-
+//Style
 const Estilo = {
     view: {
 
