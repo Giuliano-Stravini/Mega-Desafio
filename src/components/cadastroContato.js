@@ -36,11 +36,11 @@ export default class cadastroContato extends Component {
 
         //verifica quantidade de documentos para utilizar como base de ids
         db.collection('contatos').get().then(snap => {
-            size = snap.size //retorna o tamanha da coleção
-            base.addToCollection('contatos', data, "a" + snap.size) // Adiciona no Firestore (coleção, dados, id)
+            size = snap.size + 1//retorna o tamanha da coleção
+            base.addToCollection('contatos', data, "a" + size) // Adiciona no Firestore (coleção, dados, id)
                 .then(() => {
                     //exito
-                    alert('Contato cadastrado')
+                    alert("Contato cadastrado")
                 }).then(() => {
                     //Volta a tela
                     Actions.pop()
